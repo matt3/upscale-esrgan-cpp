@@ -5,6 +5,7 @@ Upscale-ESRGAN-CPP is an image upscaler project that uses a CUDA version of libt
 ## Installation
 
 Download and extract the zip on the releases page. At this time the project has only been built on windows.
+To run the model on a GPU you will need to install [NVIDIA CUDA Toolkit 11.8](https://developer.nvidia.com/cuda-11-8-0-download-archive) and [NVIDIA cuDNN 8.9](https://developer.nvidia.com/cudnn)
 
 ## Usage
 
@@ -42,6 +43,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
  - The ESRGAN model comes from the research paper [Xintao Wang, Ke Yu, Shixiang Wu, Jinjin Gu, Yihao Liu, Chao Dong, Chen Change Loy, Yu Qiao, Xiaoou Tang. "Esrgan: Enhanced super-resolution generative adversarial networks." Proceedings of the European Conference on Computer Vision (ECCV). 2018.](https://arxiv.org/abs/1809.00219)
  - The C++ [libtorch](https://pytorch.org/) implementation of ESRGAN in this project is based off the python implementation in [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
- - [ImageMagick](https://imagemagick.org/index.php) is used for loading and saving image files.
- - [safetensors-cpp](https://github.com/syoyo/safetensors-cpp) used for reading safetensor files.
+ - [ImageMagick](https://imagemagick.org/index.php) is used for loading and saving image files
+ - [safetensors-cpp](https://github.com/syoyo/safetensors-cpp) used for reading safetensor files
  - [cxxopts](https://github.com/jarro2783/cxxopts) used for command line arg parsing
