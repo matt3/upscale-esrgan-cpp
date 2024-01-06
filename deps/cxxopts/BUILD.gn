@@ -1,0 +1,8 @@
+
+group("cxxopts") {
+    public_configs = [ ":cxxopts_conf" ]
+}
+
+config("cxxopts_conf") {
+    include_dirs = [ "include" ]
+}

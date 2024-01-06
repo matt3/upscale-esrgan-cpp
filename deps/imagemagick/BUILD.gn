@@ -1,0 +1,34 @@
+declare_args() {
+    static_magick = true
+}
+
+group("imagemagick") {
+    public_configs = [ ":imagemagick_common_conf" ]
+    if(is_win) {
+        if(static_magick) {
+            if(win_runtime == "MD") {
+                public_configs += [ "win_static_MD" ]
+            } else if(win_runtime == "MDd") {
+                public_configs += [ "win_static_MDd" ]
+            } else if(win_runtime == "MT") {
+                public_configs += [ "win_static_MT" ]
+            } else if(win_runtime == "MTd") {
+                public_configs += [ "win_static_MTd" ]
+            }
+        } else {
+            if(win_runtime == "MD") {
+                public_configs += [ "win_shared_MD" ]
+            } else if(win_runtime == "MDd") {
+                public_configs += [ "win_shared_MDd" ]
+            } else if(win_runtime == "MT") {
+                assert(false, "The shared imagemagick library does not support a static runtime")
+            } else if(win_runtime == "MTd") {
+                assert(false, "The shared imagemagick library does not support a static runtime")
+            }
+        }
+    }
+}
+
+config("imagemagick_common_conf") {
+    include_dirs = [ "include" ]
+}

@@ -1,0 +1,75 @@
+
+declare_args() {
+
+}
+
+# proj's targets may be built inside other gn build systems.
+# proj builds other project's build targets inside its build.
+# This is easier if the built-in target types remain generic.
+# Place proj target specific configs in proj_target_default_configs.
+# These will be applied by the 'proj_*' templates.
+# In the proj build these configs apply many warnings as errors.
+# Other projects may optionally set these configs as they see fit.
+template("proj_target") {
+  target(invoker._proj_target_type, target_name) {
+    # set_defaults(invoker._proj_target_type) might not exist or set configs
+    if (!defined(configs)) {
+      configs = []
+    }
+
+    # Explicit configs instead of set_defaults("proj_target")
+    # Allows template("proj_*") below to avoid the configs dance.
+    if (defined(proj_target_default_configs)) {
+      configs += proj_target_default_configs
+    }
+
+    # "*" clobbers the current scope; append to existing configs
+    forward_variables_from(invoker, "*", [ "configs" ])
+    if (defined(invoker.configs)) {
+      configs += invoker.configs
+    }
+  }
+}
+
+template("proj_executable") {
+  proj_target(target_name) {
+    assert(!defined(configs), "No set_defaults(proj_target)")
+    _proj_target_type = "executable"
+    forward_variables_from(invoker, "*")
+    if (is_win) {
+      if(defined(use_windows_subsystem) && use_windows_subsystem == true) {
+        configs = [ "//gn/build_configs:subsystem_windows" ]
+      } else {
+        configs = [ "//gn/build_configs:subsystem_console" ]
+      }
+    }
+  }
+}
+template("proj_source_set") {
+  proj_target(target_name) {
+    assert(!defined(configs), "No set_defaults(proj_target)")
+    _proj_target_type = "source_set"
+    forward_variables_from(invoker, "*")
+  }
+}
+template("proj_static_library") {
+  proj_target(target_name) {
+    assert(!defined(configs), "No set_defaults(proj_target)")
+    _proj_target_type = "static_library"
+    forward_variables_from(invoker, "*")
+  }
+}
+template("proj_shared_library") {
+  proj_target(target_name) {
+    assert(!defined(configs), "No set_defaults(proj_target)")
+    _proj_target_type = "shared_library"
+    forward_variables_from(invoker, "*")
+  }
+}
+template("proj_component") {
+  proj_target(target_name) {
+    assert(!defined(configs), "No set_defaults(proj_target)")
+    _proj_target_type = "component"
+    forward_variables_from(invoker, "*")
+  }
+}

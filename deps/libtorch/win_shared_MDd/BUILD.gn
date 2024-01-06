@@ -1,0 +1,46 @@
+
+group("win_shared_MDd") {
+    deps = [
+        ":win_shared_MDd_dll",
+        ":win_shared_MDd_debug",
+    ]
+    public_configs = [ ":win_shared_MDd_conf" ]
+}
+
+config("win_shared_MDd_conf") {
+    include_dirs = [
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/include",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/include/torch/csrc/api/include",
+    ]
+    libs = [ 
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/torch_cuda.lib",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/torch_cpu.lib",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/c10.lib",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/c10_cuda.lib",
+    ]
+}
+
+copy("win_shared_MDd_dll") {
+    sources = [
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/torch_cuda.dll",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/torch_cpu.dll",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/c10.dll",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/c10_cuda.dll",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/fbgemm.dll",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/asmjit.dll",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/nvfuser_codegen.dll",
+    ]
+    outputs = ["$root_out_dir/{{source_file_part}}"]
+}
+
+copy("win_shared_MDd_debug") {
+    sources = [
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/torch_cuda.pdb",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/torch_cpu.pdb",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/c10.pdb",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/c10_cuda.pdb",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/fbgemm.pdb",
+        "./libtorch-win-shared-with-deps-debug-2.1.2+cu118/libtorch/lib/asmjit.pdb",
+    ]
+    outputs = ["$root_out_dir/{{source_file_part}}"]
+}

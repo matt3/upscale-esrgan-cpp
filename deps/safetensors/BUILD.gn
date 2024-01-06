@@ -1,0 +1,8 @@
+
+group("safetensors") {
+    public_configs = [ ":safetensors_conf" ]
+}
+
+config("safetensors_conf") {
+    include_dirs = [ "include" ]
+}

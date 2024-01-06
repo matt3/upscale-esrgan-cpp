@@ -1,0 +1,32 @@
+import("gn/project.gni")
+
+copy("copy_models") {
+    sources = [
+        "models/4x-UltraSharp.safetensors",
+    ]
+    outputs = ["$root_out_dir/{{source_file_part}}"]
+}
+
+config("use_precompiled_headers"){
+    precompiled_header = "../pch/cpp_pch.h"
+    precompiled_source = "//pch/cpp_pch.cpp"
+    cflags = [ "/FI$precompiled_header" ]
+}
+
+proj_executable("enhance") {
+  use_windows_subsystem = false
+  public_configs = [ ":use_precompiled_headers" ]
+  sources = [
+    "src/main.cpp",
+    "src/RRDBNet.cpp",
+    "src/torch_safetensors.cpp",
+    "src/torch_magick.cpp",
+    "src/util.cpp",
+  ]
+  deps = [
+    "deps/libtorch",
+    "deps/safetensors",
+    "deps/imagemagick",
+    "deps/cxxopts"
+  ]
+}

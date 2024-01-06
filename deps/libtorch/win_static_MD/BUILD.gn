@@ -1,0 +1,37 @@
+group("win_static_MD") {
+    public_configs = [ ":win_static_MD_conf" ]
+    deps = [
+        ":win_static_MD_dll",
+    ]
+}
+
+config("win_static_MD_conf") {
+    include_dirs = [
+        "../win_shared_MD/libtorch-win-shared-with-deps-2.1.2+cu118/libtorch/include",
+        "../win_shared_MD/libtorch-win-shared-with-deps-2.1.2+cu118/libtorch/include/torch/csrc/api/include",
+    ]
+    libs = [ 
+        "./lib/torch_cuda.lib",
+        "./lib/torch_cpu.lib",
+        "./lib/c10.lib",
+        "./lib/c10_cuda.lib",
+        "./lib/fbgemm.lib",
+        "./lib/dnnl.lib",
+        "./lib/cpuinfo.lib",
+        "./lib/libprotobuf.lib",
+        "./lib/onnx_proto.lib",
+        "./lib/onnx.lib",
+        "./lib/pthreadpool.lib",
+        "./lib/mimalloc-static.lib",
+        "./lib/asmjit.lib",
+        "./lib/clog.lib",
+        "./lib/nvfuser_codegen.lib",
+    ]
+}
+
+copy("win_static_MD_dll") {
+    sources = [
+        "./bin/nvfuser_codegen.dll", # pytorch wants to runtime load this, even though everything else was compiled statically...
+    ]
+    outputs = ["$root_out_dir/{{source_file_part}}"]
+}

@@ -1,0 +1,29 @@
+declare_args() {
+    static_torch = false
+}
+
+group("libtorch") {
+    if(is_win) {
+        if(static_torch) {
+            if(win_runtime == "MD") {
+                public_deps = [ "win_static_MD" ]
+            } else if(win_runtime == "MDd") {
+                public_deps = [ "win_static_MDd" ]
+            } else if(win_runtime == "MT") {
+                public_deps = [ "win_static_MT" ]
+            } else if(win_runtime == "MTd") {
+                public_deps = [ "win_static_MTd" ]
+            }
+        } else {
+            if(win_runtime == "MD") {
+                public_deps = [ "win_shared_MD" ]
+            } else if(win_runtime == "MDd") {
+                public_deps = [ "win_shared_MDd" ]
+            } else if(win_runtime == "MT") {
+                public_deps = [ "win_shared_MT" ]
+            } else if(win_runtime == "MTd") {
+                public_deps = [ "win_shared_MTd" ]
+            }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+get image magic source code zip from https://imagemagick.org/script/install-source.php#windows
+open visual studio command prompt
+goto ImageMagick-Windows\VisualMagick\configure
+msbuild.exe configure.2022.sln
+that should build ImageMagick-Windows\VisualMagick\configure\configure.exe
+run configure.exe
+goto ImageMagick-Windows\VisualMagick
+msbuild.exe VisualStaticMT.sln /property:Configuration=Release /p:PlatformToolset=v143
